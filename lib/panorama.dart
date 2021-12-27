@@ -208,13 +208,16 @@ class _PanoramaState extends State<Panorama> with SingleTickerProviderStateMixin
     if (scene == null) return;
     // auto rotate
     longitudeDelta += 0.001 * widget.animSpeed;
+
+    double adjustedSensitivity = widget.sensitivity / scene!.camera.zoom;
+
     // animate vertical rotating
-    latitude += latitudeDelta * _dampingFactor * widget.sensitivity;
-    latitudeDelta *= 1 - _dampingFactor * widget.sensitivity;
+    latitude += latitudeDelta * _dampingFactor * adjustedSensitivity;
+    latitudeDelta *= 1 - _dampingFactor * adjustedSensitivity;
     // animate horizontal rotating
-    longitude += _animateDirection * longitudeDelta * _dampingFactor * widget.sensitivity;
-    longitudeDelta *= 1 - _dampingFactor * widget.sensitivity;
-    // animate zomming
+    longitude += _animateDirection * longitudeDelta * _dampingFactor * adjustedSensitivity;
+    longitudeDelta *= 1 - _dampingFactor * adjustedSensitivity;
+    // animate zooming
     final double zoom = scene!.camera.zoom + zoomDelta * _dampingFactor;
     zoomDelta *= 1 - _dampingFactor;
     scene!.camera.zoom = zoom.clamp(widget.minZoom, widget.maxZoom);
