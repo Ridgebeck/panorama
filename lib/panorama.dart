@@ -209,7 +209,7 @@ class _PanoramaState extends State<Panorama> with SingleTickerProviderStateMixin
     // auto rotate
     longitudeDelta += 0.001 * widget.animSpeed;
 
-    double adjustedSensitivity = widget.sensitivity / scene!.camera.zoom;
+    double adjustedSensitivity = widget.sensitivity / scene!.camera.zoom * 5;
 
     // animate vertical rotating
     latitude += latitudeDelta * _dampingFactor * adjustedSensitivity;
